@@ -62,6 +62,15 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey.contribs</groupId>
+            <artifactId>jersey-apache-client4</artifactId>
+            <version>1.19.4</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -128,9 +137,9 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <username>ivanluchkin</username>
+                    <username>rostyslavpryimak</username>
                     <password></password>
-                    <repository>ivanluchkin/lab-movie-service</repository>
+                    <repository>rostyslavpryimak/lab-movie-service</repository>
                     <tag>${project.version}</tag>
                     <buildArgs>
                         <JAR_FILE>target/movie-service-${project.version}.jar</JAR_FILE>
