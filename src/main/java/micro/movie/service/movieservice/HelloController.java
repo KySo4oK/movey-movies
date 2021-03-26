@@ -13,7 +13,20 @@ public class HelloController {
 
     @GetMapping("/hello")
     public String sayHello() {
-        return service.hello() +
-                "Hello! Movie microservice is on Kubernetes now!";
+        String n;
+        while (true) {
+            try {
+                n = service.hello();
+            } catch (Exception e) {
+                e.printStackTrace();
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
+                continue;
+            }
+            return n + "Hello! Movie microservice is on Kubernetes now!";
+        }
     }
 }
