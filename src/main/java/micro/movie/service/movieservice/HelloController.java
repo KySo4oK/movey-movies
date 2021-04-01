@@ -8,13 +8,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/movie")
 public class HelloController {
-
     @Autowired
-    private UserService userService;
+    UserService service;
 
     @GetMapping("/hello")
     public String sayHello() {
-        return userService.getData() +
-         "Hello! Movie microservice is on Kubernetes now!";
+        return service.hello() +
+                "Hello! Movie microservice is on Kubernetes now!";
     }
 }

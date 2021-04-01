@@ -1,11 +1,11 @@
 package micro.movie.service.movieservice;
 
-import org.springframework.cloud.netflix.feign.FeignClient;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
 
-@FeignClient(name="employee-producer")
+@FeignClient(name = "user-service", url = "http://localhost:8080/")
 public interface UserService {
-    @RequestMapping(method= RequestMethod.GET, value="/user/hello")
-    public String getData();
+    @GetMapping(value = "/user/hello")
+    String hello();
+    }
 }
