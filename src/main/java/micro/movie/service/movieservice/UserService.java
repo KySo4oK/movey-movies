@@ -7,5 +7,4 @@ import org.springframework.web.bind.annotation.GetMapping;
 public interface UserService {
     @GetMapping(value = "/user/hello")
     String hello();
-    }
 }
