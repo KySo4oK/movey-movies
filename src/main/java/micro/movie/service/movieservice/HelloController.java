@@ -2,7 +2,6 @@ package micro.movie.service.movieservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,7 +13,7 @@ public class HelloController {
     private UserService userService;
 
     @Autowired
-    private SimpleKafkaService kafkaService;
+    RabbitMqReceiver rabbitMqReceiver;
 
     @GetMapping("/hello")
     public String sayHello() {
@@ -22,13 +21,13 @@ public class HelloController {
                 "Hello! Movie microservice is on Kubernetes now!";
     }
 
-    @GetMapping("/kafka/{message}")
-    public String sendToKafka(@PathVariable(name = "message") String message) {
+    @GetMapping("/rabbit")
+    public String listenRabbit() {
         try {
-            kafkaService.send(message);
+            return rabbitMqReceiver.getMessage();
         } catch (Exception e) {
-            return "was not sent to kafka - " + e.getMessage();
+            e.printStackTrace();
+            return "listener error";
         }
-        return message + " was sent to kafka";
     }
 }
