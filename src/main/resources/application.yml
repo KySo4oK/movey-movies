@@ -1,9 +1,9 @@
 spring:
   rabbitmq:
-    host: rabbitmq-service.default.svc.cluster.local
-    password: guest
+    host: rabbitmq
+    password: admin
     port: 5672
-    username: guest
+    username: admin
     exchange: movie.exchange
     queue: movie.queue
     routingkey: movie.routingkey
