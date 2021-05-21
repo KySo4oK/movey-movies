@@ -5,7 +5,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.PropertiesPropertySource;
 
-import java.util.Base64;
 import java.util.Map;
 import java.util.Properties;
 
@@ -24,6 +23,6 @@ public class CustomPropertiesListener implements ApplicationListener<Application
     }
 
     private String getSecret(String key) {
-        return new String(Base64.getDecoder().decode(sources.get(key)));
+        return new EncryptionUtils().decrypt(sources.get(key));
     }
 }

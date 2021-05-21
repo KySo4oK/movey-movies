@@ -10,7 +10,7 @@
     </parent>
     <groupId>micro.movie.service</groupId>
     <artifactId>movie-service</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
     <name>movie-service</name>
     <description>Movie Microservice</description>
     <properties>
