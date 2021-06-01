@@ -1,4 +1,4 @@
-package micro.movie.service.movieservice;
+package micro.movie.service.movieservice.config;
 
 import lombok.Data;
 

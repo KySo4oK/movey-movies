@@ -1,4 +1,4 @@
-package micro.movie.service.movieservice;
+package micro.movie.service.movieservice.util;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;

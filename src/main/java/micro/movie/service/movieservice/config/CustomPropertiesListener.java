@@ -1,5 +1,6 @@
-package micro.movie.service.movieservice;
+package micro.movie.service.movieservice.config;
 
+import micro.movie.service.movieservice.util.EncryptionUtils;
 import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.core.env.ConfigurableEnvironment;
