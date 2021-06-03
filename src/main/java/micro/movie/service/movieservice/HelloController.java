@@ -1,14 +1,17 @@
 package micro.movie.service.movieservice;
 
 import com.uwetrottmann.tmdb2.Tmdb;
+import com.uwetrottmann.tmdb2.entities.Movie;
 import com.uwetrottmann.tmdb2.entities.MovieResultsPage;
 import com.uwetrottmann.tmdb2.services.MoviesService;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import retrofit2.Response;
@@ -20,14 +23,14 @@ public class HelloController {
     MoviesService moviesService = tmdb.moviesService();
 
     @Autowired
-    private UserService userService;
+    private SuggestionsService suggestionsService;
 
     @Autowired
     RabbitMqReceiver rabbitMqReceiver;
 
     @GetMapping("/hello")
     public String sayHello() {
-        return userService.hello() +
+        return suggestionsService.hello() +
                 "Hello! Movie microservice is on Kubernetes now!";
     }
 
@@ -42,7 +45,7 @@ public class HelloController {
     }
 
     @GetMapping("/fetch")
-    public ResponseEntity<MovieResultsPage> getSmth() {
+    public ResponseEntity<MovieResultsPage> fetchMovies() {
         try {
             Response<MovieResultsPage> response = moviesService.topRated((int)(Math.random() * 99) + 1, "", "").execute();
             if (response.isSuccessful()) {
@@ -56,5 +59,19 @@ public class HelloController {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+    }
+
+    @GetMapping("/saved/{userId}")
+    public ResponseEntity<List<Movie>> getSavedMoviesByUser(@PathVariable Integer userId) {
+        List<Integer> ids = suggestionsService.getSavedMovieIds(userId);
+        List<Movie> savedMovies = ids.stream().map(it -> {
+            try {
+                return moviesService.summary(it, "").execute().body();
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            }
+        }).collect(Collectors.toList());
+        return ResponseEntity.ok().body(savedMovies);
     }
 }

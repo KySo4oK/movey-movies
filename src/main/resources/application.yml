@@ -1,9 +1,7 @@
 spring:
   rabbitmq:
     host: rabbitmq
-    password: admin
     port: 5672
-    username: admin
     exchange: movie.exchange
     queue: movie.queue
     routingkey: movie.routingkey
