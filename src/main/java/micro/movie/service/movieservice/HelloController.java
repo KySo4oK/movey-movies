@@ -1,6 +1,7 @@
 package micro.movie.service.movieservice;
 
 import com.uwetrottmann.tmdb2.Tmdb;
+import com.uwetrottmann.tmdb2.entities.BaseMovie;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import com.uwetrottmann.tmdb2.entities.MovieResultsPage;
 import com.uwetrottmann.tmdb2.services.MoviesService;
@@ -62,9 +63,9 @@ public class HelloController {
     }
 
     @GetMapping("/saved/{userId}")
-    public ResponseEntity<List<Movie>> getSavedMoviesByUser(@PathVariable Integer userId) {
+    public ResponseEntity<List<BaseMovie>> getSavedMoviesByUser(@PathVariable Integer userId) {
         List<Integer> ids = suggestionsService.getSavedMovieIds(userId);
-        List<Movie> savedMovies = ids.stream().map(it -> {
+        List<BaseMovie> savedMovies = ids.stream().map(it -> {
             try {
                 return moviesService.summary(it, "").execute().body();
             } catch (IOException e) {
