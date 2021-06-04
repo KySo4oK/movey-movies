@@ -67,7 +67,9 @@ public class HelloController {
         List<Integer> ids = suggestionsService.getSavedMovieIds(userId);
         List<BaseMovie> savedMovies = ids.stream().map(it -> {
             try {
-                return moviesService.summary(it, "").execute().body();
+                BaseMovie movie = moviesService.summary(it, "").execute().body();
+                movie.poster_path = "https://image.tmdb.org/t/p/w500" + movie.poster_path;
+                return movie ;
             } catch (IOException e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
