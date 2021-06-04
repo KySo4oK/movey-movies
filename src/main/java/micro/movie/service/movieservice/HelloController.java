@@ -2,12 +2,12 @@ package micro.movie.service.movieservice;
 
 import com.uwetrottmann.tmdb2.Tmdb;
 import com.uwetrottmann.tmdb2.entities.BaseMovie;
-import com.uwetrottmann.tmdb2.entities.Movie;
 import com.uwetrottmann.tmdb2.entities.MovieResultsPage;
 import com.uwetrottmann.tmdb2.services.MoviesService;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +22,7 @@ import retrofit2.Response;
 public class HelloController {
     Tmdb tmdb = new Tmdb("df42876914d18a938f38411b2d1042e5");
     MoviesService moviesService = tmdb.moviesService();
+    private static final Logger log = Logger.getLogger(String.valueOf(HelloController.class));
 
     @Autowired
     private SuggestionsService suggestionsService;
@@ -47,6 +48,7 @@ public class HelloController {
 
     @GetMapping("/fetch")
     public ResponseEntity<MovieResultsPage> fetchMovies() {
+        log.info("fetching movies");
         try {
             Response<MovieResultsPage> response = moviesService.topRated((int)(Math.random() * 99) + 1, "", "").execute();
             if (response.isSuccessful()) {
@@ -64,6 +66,7 @@ public class HelloController {
 
     @GetMapping("/saved/{userId}")
     public ResponseEntity<List<BaseMovie>> getSavedMoviesByUser(@PathVariable Integer userId) {
+        log.info("get saved movies for - " + userId);
         List<Integer> ids = suggestionsService.getSavedMovieIds(userId);
         List<BaseMovie> savedMovies = ids.stream().map(it -> {
             try {
